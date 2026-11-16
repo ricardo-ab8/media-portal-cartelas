@@ -160,25 +160,27 @@ img[data-n*="F08"]{filter:saturate(1.55) contrast(1.12) brightness(1.08)}
 .lg .halo{transform-box:view-box;transform-origin:8292px 6793px;opacity:0}
 /* opção A: entrada rápida e com impacto */
 .lg.A .part{opacity:0}
-.run .lg.A .part{animation:partIn .42s cubic-bezier(.3,1.8,.5,1) var(--d) both,partFlash .5s ease calc(var(--d) + .75s) 1}
-@keyframes partIn{0%{transform:scale(0);opacity:0;fill:#D9541E}55%{opacity:1;fill:#D9541E}100%{transform:none;opacity:1;fill:#fff}}
+.run .lg.A .part{animation:flickIn .55s linear var(--d) both,partIn .42s cubic-bezier(.3,1.8,.5,1) var(--d) both}
+@keyframes partIn{0%{transform:scale(.4)}100%{transform:none}}
 @keyframes partFlash{0%,100%{fill:#fff}35%{fill:#D9541E}}
-.run .lg.A .halo{animation:halo .9s ease-out .25s both,halo .9s ease-out .65s both}
+.run .lg.A .halo{animation:halo .9s ease-out .3s both,halo .9s ease-out 1.25s both}
 @keyframes halo{0%{opacity:0;transform:scale(.2)}30%{opacity:1}100%{opacity:0;transform:scale(1.4)}}
 .lg .shock{transform-box:view-box;transform-origin:8292px 6793px;opacity:0}
-.run .lg.A .shock{animation:shock 1s cubic-bezier(.1,.7,.3,1) .95s both}
+.run .lg.A .shock{animation:shock 1s cubic-bezier(.1,.7,.3,1) 1.55s both}
 @keyframes shock{0%{opacity:0;transform:scale(1)}6%{opacity:.9}100%{opacity:0;transform:scale(2.6)}}
-.run .lg.A{animation:punch .5s cubic-bezier(.3,1.6,.5,1) .9s both}
+.run .lg.A{animation:punch .5s cubic-bezier(.3,1.6,.5,1) 1.5s both}
 @keyframes punch{0%{transform:scale(1)}35%{transform:scale(1.045)}100%{transform:none}}
 .lg.A .txt{opacity:0}
-.run .lg.A .txt{animation:txtIn .55s cubic-bezier(.16,1,.3,1) 1.05s both}
+.run .lg.A .txt{animation:txtIn .55s cubic-bezier(.16,1,.3,1) 1.65s both}
 @keyframes txtIn{from{opacity:0;transform:translateX(-700px);filter:blur(30px)}to{opacity:1;transform:none;filter:none}}
 /* opção B: logo inteiro aparece → perde o sinal e procura (rápido) → conecta → frase */
-.run .lg.B{animation:fadein .5s ease .15s both}
-.run .lg.B .part{animation:sigLoop .6s ease var(--d) 2 both,sigOn .3s ease calc(var(--d) + 1.25s) forwards}
+.lg.B .part{opacity:0}
+.run .lg.B .part{animation:flickIn 1s linear var(--d) both}
+.lg.B .txt{opacity:0}
+.run .lg.B .txt{animation:txtIn .6s cubic-bezier(.16,1,.3,1) 1.45s both}
 @keyframes sigLoop{0%{opacity:1;fill:#fff}15%{opacity:.15}45%{opacity:1;fill:#D9541E}70%{fill:#fff}100%{opacity:.15}}
 @keyframes sigOn{0%{opacity:.15}50%{fill:#D9541E}100%{opacity:1;fill:#fff}}
-.run .lg.B .halo{animation:halo .6s ease-out 1s 2,halo 1s ease-out 2.4s both}
+.run .lg.B .halo{animation:halo 1s ease-out 1.2s both}
 /* F12 · cópias exatas do símbolo (reserva) */
 .sym{transform-box:fill-box;transform-origin:50% 50%;opacity:0}
 .run .sym.in{animation:symIn 1.15s cubic-bezier(.7,0,.25,1) var(--d,0s) both}
@@ -210,6 +212,26 @@ img[data-n*="F08"]{filter:saturate(1.55) contrast(1.12) brightness(1.08)}
 @keyframes dot{0%{opacity:0;transform:scale(.2)}15%{opacity:1;transform:scale(1.3)}25%{transform:scale(1)}85%{opacity:1}100%{opacity:0}}
 .run .vline{animation:vline .8s cubic-bezier(.16,1,.3,1) var(--d,0s) both}
 @keyframes vline{from{transform:scaleY(0)}}
+
+/* transição circular (da virada em diante): pulso de onda + íris */
+.circ.run .cam{animation:irisIn .7s cubic-bezier(.6,0,.2,1) both,irisOut .45s cubic-bezier(.7,0,.9,.4) calc(var(--dur) - .45s) both}
+@keyframes irisIn{from{clip-path:circle(0% at 50% 50%)}to{clip-path:circle(120% at 50% 50%)}}
+@keyframes irisOut{from{clip-path:circle(120% at 50% 50%)}to{clip-path:circle(0% at 50% 50%)}}
+.tring{position:absolute;left:50%;top:50%;width:2300px;height:2300px;border-radius:50%;border:6px solid #6BA4EC;box-shadow:0 0 40px #6BA4EC,inset 0 0 40px rgba(217,84,30,.6);transform:translate(-50%,-50%) scale(0);opacity:0;pointer-events:none}
+.run .tring{animation:tpulse .8s cubic-bezier(.2,.7,.3,1) 0s both,tpulse .6s cubic-bezier(.2,.7,.3,1) calc(var(--dur) - .5s) forwards}
+@keyframes tpulse{0%{transform:translate(-50%,-50%) scale(0);opacity:0}10%{opacity:1}100%{transform:translate(-50%,-50%) scale(1);opacity:0}}
+/* trilho da jornada: a linha azul que liga as 6 etapas */
+.rail{position:absolute;left:0;top:0;width:1920px;height:1080px;pointer-events:none}
+.rail .lbl{position:absolute;top:968px;transform:translateX(-50%);font:700 14px "JetBrains Mono";letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.38);white-space:nowrap}
+.rail .lbl.on{color:#fff}
+.rail .nd{position:absolute;top:945px;width:14px;height:14px;margin:-7px;border-radius:50%;background:#0b1424;border:2px solid #6BA4EC}
+.rail .nd.done{background:#6BA4EC}
+.rail .nd.on{width:22px;height:22px;margin:-11px;background:#D9541E;border-color:#ffd2b0;box-shadow:0 0 22px 6px rgba(217,84,30,.8);animation:ndp 1.2s ease-in-out infinite}
+@keyframes ndp{50%{box-shadow:0 0 34px 12px rgba(217,84,30,.55)}}
+/* F12 · entrada piscando (sinal) */
+@keyframes flickIn{0%{opacity:0;fill:#D9541E}8%{opacity:1}16%{opacity:.08}26%{opacity:1}34%{opacity:.15}44%{opacity:1;fill:#D9541E}54%{opacity:.35}66%{opacity:1}100%{opacity:1;fill:#fff}}
+.run .outup{animation:outup .45s cubic-bezier(.7,0,.9,.4) var(--d) forwards}
+@keyframes outup{to{transform:translateY(-60px);opacity:0}}
 </style>
 </head>
 <body>
@@ -260,9 +282,9 @@ const ARC=(rx,sw,color,cls,style)=>`<ellipse class="lw ${cls}" cx="0" cy="0" rx=
 const LOGOSVG=(x,y,w,mode)=>`<svg class="lg ${mode}" viewBox="0 0 ${LOGO_W} ${LOGO_H}" style="position:absolute;left:${x}px;top:${y}px;width:${w}px;height:${(w*LOGO_H/LOGO_W).toFixed(1)}px;overflow:visible">
   <circle class="halo" cx="8292" cy="6793" r="2600" fill="url(#hg${mode})"/><defs><radialGradient id="hg${mode}"><stop offset="0" stop-color="#D9541E" stop-opacity=".55"/><stop offset="1" stop-color="#D9541E" stop-opacity="0"/></radialGradient></defs>
   ${mode==='A'?`<path class="shock" d="${SYM}" fill="none" stroke="#D9541E" stroke-width="3" vector-effect="non-scaling-stroke"/>`:''}
-  <path class="part p-dot" d="${LOGO_PARTS.dot}" fill="#fff" style="--d:${mode==='A'?.25:1.0}s"/>
-  <path class="part p-in" d="${LOGO_PARTS.inner}" fill="#fff" style="--d:${mode==='A'?.45:1.18}s"/>
-  <path class="part p-out" d="${LOGO_PARTS.outer}" fill="#fff" style="--d:${mode==='A'?.65:1.36}s"/>
+  <path class="part p-dot" d="${LOGO_PARTS.dot}" fill="#fff" style="--d:${mode==='A'?.25:.3}s"/>
+  <path class="part p-in" d="${LOGO_PARTS.inner}" fill="#fff" style="--d:${mode==='A'?.6:.3}s"/>
+  <path class="part p-out" d="${LOGO_PARTS.outer}" fill="#fff" style="--d:${mode==='A'?.95:.3}s"/>
   <g class="txt"><path d="${LOGO_TXT}" fill="#fff"/></g></svg>`;
 // camada do tamanho exato do logo, com cópias do símbolo vetorial oficial
 const SYMSVG=(x,y,w,inner)=>`<svg viewBox="0 0 ${LOGO_W} ${LOGO_H}" style="position:absolute;left:${x}px;top:${y}px;width:${w}px;height:${(w*LOGO_H/LOGO_W).toFixed(1)}px;overflow:visible;filter:drop-shadow(0 0 18px rgba(255,140,70,.35))">${inner}</svg>`;
@@ -417,8 +439,8 @@ const C=[
    </div>
    <div class="numrot" data-rot="2.1" style="position:absolute;left:150px;top:220px">
      ${[['+','18','','anos de mercado'],['+','100',' mi','milhões de ativos gerenciados'],['+','6',' TB','por dia de mídia'],['','100','%','tecnologia brasileira']].map(([pre,n,u,l],i)=>`<div class="nr" style="position:absolute;left:0;top:0;width:1300px;opacity:${i?0:1}">
-       <div style="font:700 300px/1 'Space Grotesk';letter-spacing:-.05em;color:#14273F;white-space:nowrap">${pre?`<span style="color:#D9541E">${pre}</span>`:''}${n.split('').map(d=>`<span class="dg" data-t="${d}"><span class="col">${'01234567890123456789'.split('').map(x=>`<b>${x}</b>`).join('')}</span></span>`).join('')}<span style="font-size:${u==='%'?300:130}px;color:#D9541E;margin-left:${u==='%'?0:20}px">${u}</span></div>
-       <div style="font:500 58px 'Space Grotesk';color:#14273F;margin-top:30px;display:flex;align-items:center;gap:22px"><i class="grow" style="width:90px;height:9px;background:#D9541E;display:inline-block;--d:${(i*2.1+.4).toFixed(1)}s"></i>${l}</div></div>`).join('')}
+       <div style="font:700 300px/1 'Space Grotesk';letter-spacing:-.05em;color:#14273F;white-space:nowrap">${pre?`<span>${pre}</span>`:''}${n.split('').map(d=>`<span class="dg" data-t="${d}"><span class="col">${'01234567890123456789'.split('').map(x=>`<b>${x}</b>`).join('')}</span></span>`).join('')}<span style="font-size:${u==='%'?300:130}px;color:#3a5070;margin-left:${u==='%'?0:20}px">${u}</span></div>
+       <div style="font:500 58px 'Space Grotesk';color:#14273F;margin-top:30px;display:flex;align-items:center;gap:22px"><i class="grow" style="width:90px;height:9px;background:#14273F;display:inline-block;--d:${(i*2.1+.4).toFixed(1)}s"></i>${l}</div></div>`).join('')}
    </div>
    <div style="position:absolute;left:150px;bottom:110px;display:flex;gap:26px;align-items:center">
      <span style="font:700 16px 'JetBrains Mono';letter-spacing:.2em;color:#6a7790">QUEM CONFIA</span>
@@ -433,35 +455,43 @@ const C=[
 {id:'F12-A',t:'00:42 – 00:50',act:'Ato 5 · Marca',src:'code',dur:7,col:'#14273F',name:'Marca A',tag:'FECHAMENTO · OPÇÃO A',
  html:`<div class="L cam" style="background:radial-gradient(ellipse at 40% 45%,#16304f,#05070D 72%)">
    ${LOGOSVG(330,240,1260,'A')}
-   <div class="pop" style="position:absolute;left:660px;top:735px;width:600px;height:96px;border-radius:99px;background:#D9541E;display:grid;place-items:center;font:700 38px 'Space Grotesk';--d:1.7s;box-shadow:0 20px 60px rgba(217,84,30,.5);overflow:hidden">Descubra sua jornada<span class="shine" style="--sd:2.3s"></span></div>
-   <div style="position:absolute;left:0;right:0;top:875px;text-align:center;font:500 36px 'JetBrains Mono';color:#9fb4d4"><span class="typed" data-type="mediaportal.com.br" data-at="2.1" data-speed="45"></span></div>
+   <div class="pop" style="position:absolute;left:660px;top:735px;width:600px;height:96px;border-radius:99px;background:#D9541E;display:grid;place-items:center;font:700 38px 'Space Grotesk';--d:2.3s;box-shadow:0 20px 60px rgba(217,84,30,.5);overflow:hidden">Descubra sua jornada<span class="shine" style="--sd:2.9s"></span></div>
+   <div style="position:absolute;left:0;right:0;top:875px;text-align:center;font:500 36px 'JetBrains Mono';color:#9fb4d4"><span class="typed" data-type="mediaportal.com.br" data-at="2.7" data-speed="45"></span></div>
  </div>
  ${OVER('stars')}${LEG('Media Portal. A segurança da sua mídia começa na gestão do seu acervo.',.3)}`,
  tela:'Descubra sua jornada · mediaportal.com.br',
- motion:['Assinatura centralizada com o logo HORIZONTAL oficial (antena à esquerda, MEDIA PORTAL à direita)','Entrada rápida e com impacto: ponto → onda de dentro → onda de fora estalam em sequência (0,4 s entre elas), com brilho laranja saindo do ponto','Uma onda de choque no formato do símbolo sai do logo, o logo dá um leve soco de escala e o MEDIA PORTAL entra deslizando com desfoque (nada gira)','Botão laranja com mola e brilho; endereço digitado'],
+ motion:['Assinatura centralizada com o logo HORIZONTAL oficial (antena à esquerda, MEDIA PORTAL à direita)','Entrada piscando como sinal: ponto → onda de dentro → onda de fora acendem em sequência, cada uma piscando em laranja antes de firmar em branco','Sinal firme: onda de choque no formato do símbolo, leve soco de escala, e só então o MEDIA PORTAL entra deslizando (nada gira)','Botão laranja com mola e brilho; endereço digitado'],
  som:'Pulsos graves a cada onda, acorde final quando o logo pousa.'},
 
 {id:'F12-B',t:'00:42 – 00:50',act:'Ato 5 · Marca',src:'code',dur:7,col:'#D9541E',name:'Marca B',tag:'FECHAMENTO · OPÇÃO B',
  html:`<div class="L cam" style="background:radial-gradient(ellipse at 22% 55%,#2a1a14,#0a0d18 45%,#05070D 80%)">
    ${LOGOSVG(80,320,1020,'B')}
-   <div class="vline" style="position:absolute;left:1150px;top:300px;width:3px;height:480px;background:linear-gradient(#D9541E,rgba(217,84,30,0));transform-origin:top;--d:2.55s"></div>
-   <div class="hl" style="left:1210px;top:330px;font-size:56px;font-weight:600;line-height:1.12">${W('A segurança da',2.7,.06)}<br>${W('sua mídia começa',2.88,.06)}<br>${W('na gestão do',3.06,.06)} ${W('acervo.',3.24,.06,'mark')}</div>
-   <div class="pop" style="position:absolute;left:1210px;top:630px;width:520px;height:90px;border-radius:99px;background:#D9541E;display:grid;place-items:center;font:700 34px 'Space Grotesk';--d:3.9s;box-shadow:0 20px 60px rgba(217,84,30,.5);overflow:hidden">Descubra sua jornada<span class="shine" style="--sd:4.5s"></span></div>
-   <div style="position:absolute;left:1216px;top:760px;font:500 32px 'JetBrains Mono';color:#9fb4d4"><span class="typed" data-type="mediaportal.com.br" data-at="4.3" data-speed="45"></span></div>
+   <div class="vline" style="position:absolute;left:1150px;top:300px;width:3px;height:480px;background:linear-gradient(#D9541E,rgba(217,84,30,0));transform-origin:top;--d:1.9s"></div>
+   <div class="hl outup" style="left:1210px;top:380px;font-size:62px;font-weight:600;line-height:1.1;--d:3.5s">${W('A segurança',2.2,.07)}<br>${W('da sua mídia',2.36,.07)}</div>
+   <div class="hl" style="left:1210px;top:380px;font-size:62px;font-weight:600;line-height:1.1">${W('começa na gestão',3.8,.07)}<br>${W('do seu',3.98,.07)} ${W('acervo.',4.12,.07,'mark')}</div>
+   <div class="pop" style="position:absolute;left:1210px;top:630px;width:520px;height:90px;border-radius:99px;background:#D9541E;display:grid;place-items:center;font:700 34px 'Space Grotesk';--d:4.7s;box-shadow:0 20px 60px rgba(217,84,30,.5);overflow:hidden">Descubra sua jornada<span class="shine" style="--sd:5.3s"></span></div>
+   <div style="position:absolute;left:1216px;top:760px;font:500 32px 'JetBrains Mono';color:#9fb4d4"><span class="typed" data-type="mediaportal.com.br" data-at="5.1" data-speed="45"></span></div>
  </div>
  ${OVER('stars')}${LEG('Media Portal. A segurança da sua mídia começa na gestão do seu acervo.',.3)}`,
  tela:'A segurança da sua mídia começa na gestão do acervo. · Descubra sua jornada · mediaportal.com.br',
- motion:['Layout dividido: logo horizontal à esquerda, frase-assinatura + botão à direita','Primeiro o logo inteiro aparece; logo depois a antena perde o sinal e procura rápido (ponto → onda de dentro → onda de fora, duas vezes) e conecta com um pulso laranja','Só depois de conectar entra a frase da direita; a linha laranja vertical cresce separando as duas metades','Frase-assinatura palavra a palavra, com "acervo" em laranja; botão e endereço no fim'],
+ motion:['Layout dividido: logo horizontal à esquerda, frase-assinatura + botão à direita','O símbolo entra piscando, como sinal pegando, e firma com um pulso laranja; em seguida entra o MEDIA PORTAL','Depois a parte da direita: a frase-assinatura em duas telas de até 6 palavras ("A segurança / da sua mídia" → "começa na gestão / do seu acervo."), depois botão e endereço','Frase-assinatura palavra a palavra, com "acervo" em laranja; botão e endereço no fim'],
  som:'Pulso grave em loop no ritmo das ondas; acorde final no botão.'}
 ];
 
 // ---------- monta a página ----------
+const STAGES=['Captura','Produção','Gestão','Inteligência','Distribuição','Preservação'];
+const RAIL=k=>{const x=i=>260+i*280,y=945;const px=k?x(k-1):x(0)-180;
+ return `<div class="rail"><svg width="1920" height="1080" style="position:absolute;inset:0"><defs><linearGradient id="rg${k}" x1="0" x2="1"><stop offset="0" stop-color="#6BA4EC" stop-opacity="0"/><stop offset=".12" stop-color="#6BA4EC"/><stop offset=".88" stop-color="#6BA4EC"/><stop offset="1" stop-color="#6BA4EC" stop-opacity="0"/></linearGradient></defs><line x1="0" y1="${y}" x2="1920" y2="${y}" stroke="url(#rg${k})" stroke-width="3" style="filter:drop-shadow(0 0 6px #6BA4EC)"/><line x1="${x(0)}" y1="${y}" x2="${x(k)}" y2="${y}" stroke="#bfe0ff" stroke-width="4"/></svg>
+ ${STAGES.map((s,i)=>`<div class="nd ${i<k?'done':i===k?'on':''}" style="left:${x(i)}px"></div><div class="lbl ${i===k?'on':''}" style="left:${x(i)}px">${s}</div>`).join('')}
+ <div class="pkt" style="offset-path:path('M ${px} ${y} L ${x(k)} ${y}');--d:.5s;--per:2s;width:18px;height:18px;margin:-9px 0 0 -9px;background:#ffd2b0;box-shadow:0 0 14px 6px rgba(255,140,60,.95)"></div></div>`};
+const RAILIDX={F05:0,F06:1,F07:2,F08:3,F09:4,F10:5};
+const CIRC=new Set(['F04','F05','F06','F07','F08','F09','F10','F11','F12-A','F12-B']);
 const badge={flow:'<span class="badge b-flow">Flow + código</span>',code:'<span class="badge b-code">Código</span>','3d':'<span class="badge b-3d">Código 3D</span>'};
 document.getElementById('colorbar').innerHTML=C.map(c=>`<div style="background:${c.col};${c.id=='F11'?'color:#14273F;text-shadow:none':''}">${c.id} ${c.name}</div>`).join('');
 document.getElementById('carts').innerHTML=C.map(c=>`
 <section class="cart">
  <div class="cart-h"><span class="id">${c.id}</span><span class="t">${c.t}</span><span style="color:var(--mu);font-size:14px">${c.act}</span>${c.tag?`<span class="tag">${c.tag}</span>`:''}${badge[c.src]}</div>
- <div class="screen" data-dur="${c.dur}"><div class="stage" style="--dur:${c.dur}s">${c.html}</div></div>
+ <div class="screen" data-dur="${c.dur}"><div class="stage${CIRC.has(c.id)?' circ':''}" style="--dur:${c.dur}s">${c.html}${c.id in RAILIDX?RAIL(RAILIDX[c.id]):''}${CIRC.has(c.id)?'<div class="tring"></div>':''}</div></div>
  <div class="info">
   <div><b>Texto em tela</b><span class="tela">${c.tela}</span></div>
   <div><b>Motion</b><ul>${c.motion.map(m=>`<li>${m}</li>`).join('')}</ul></div>
@@ -470,7 +500,7 @@ document.getElementById('carts').innerHTML=C.map(c=>`
 </section>`).join('');
 
 document.getElementById('lang').innerHTML=[
- ['Transição','Chicote de câmera com blur direcional entre todas as cenas; na jornada, o pacote de luz "puxa" a câmera para a próxima etapa.'],
+ ['Transição','Ato 1 (caos): chicote de câmera com blur. Da virada em diante: pulso das ondas em transição circular, como pede o briefing.'],['Linha da jornada','Uma linha azul atravessa as 6 etapas, com o pacote laranja correndo até a etapa atual; os nomes das etapas ficam no trilho.'],
  ['Texto','Máscara de baixo para cima, palavra a palavra; a palavra-chave de cada cena muda para o laranja do logo (sem sublinhado).'],
  ['Interface','Janelas de vidro flutuando com parallax, digitação real, cursor em pixel art colorido, "Pensando…" com etapas → ✓.'],
  ['Impacto','Tremor + troca de cor a cada 1–2 quadros + rolagem de câmera, só em 2 momentos (perda e virada).'],
