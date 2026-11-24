@@ -1,6 +1,4 @@
-# Media Portal · cartelas do vídeo institucional
+# Media Portal · vídeo institucional
 
-Prévia animada das cartelas do vídeo institucional da Media Portal (master de 50 s, 12 cenas e duas opções de fechamento).
-
-- Versão atual: [index.html](index.html)
-- Versão 1: [v1/index.html](v1/index.html)
+- Versão atual (v2): [index.html](index.html) — o que mudou a partir das notas do Bruno de 19/11, com a prévia do vídeo.
+- Versão 1: [v1/index.html](v1/index.html) — cartelas animadas da v1.
